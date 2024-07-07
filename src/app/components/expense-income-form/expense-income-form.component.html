@@ -1,0 +1,31 @@
+<form [formGroup]="formGroup" class="example-form" *ngIf="formGroup" (ngSubmit)="submit()">
+   
+
+    <app-month-autocomplite  [formControl]="monthFormContorl"></app-month-autocomplite>
+
+
+    <app-year [formControl]="yearFormControl"></app-year>
+   
+
+    <mat-form-field>
+        <mat-label>Category</mat-label>
+        <mat-select name="category" formControlName="category">
+            @for (category of categories; track category.id) {
+            <mat-option [value]="category.id">{{ category.value }}</mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+        <mat-label>Amount </mat-label>
+        <input matInput type="number"  formControlName="amount">
+    </mat-form-field>
+    <button mat-flat-button>Save</button>
+
+    <mat-form-field class="example-full-width">
+        <mat-label>Choose an option</mat-label>
+        <mat-select formControlName="kind">
+            <mat-option value="real">Real</mat-option>
+            <mat-option value="predicted">Predicted</mat-option>
+        </mat-select>
+    </mat-form-field>
+</form>

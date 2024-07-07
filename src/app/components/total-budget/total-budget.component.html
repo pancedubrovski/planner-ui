@@ -1,0 +1,109 @@
+<div *ngIf="isLoaded" style="padding: 50px;">
+
+
+    <mat-grid-list cols="7.5" rowHeight="80px">
+
+        <mat-grid-tile [colspan]="1.5" [rowspan]="2"></mat-grid-tile>
+        @for (p of currentPeriod; track p) {
+        <mat-grid-tile [colspan]="2" [rowspan]="1">{{ getMouthTitel(p.month) }}</mat-grid-tile>
+        }
+        <mat-grid-tile [colspan]="1" rowHeight="10px" [rowspan]="1">
+            <div>
+                <h5>Predicted</h5>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="1">
+
+            <div>
+                <h5>Real</h5>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" rowHeight="10px" [rowspan]="1">
+            <div>
+                <h5>Predicted</h5>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="1">
+
+            <div>
+                <h5>Real</h5>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" rowHeight="10px" [rowspan]="1">
+            <div>
+                <h5>Predicted</h5>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="1">
+            <div>
+                <h5>Real</h5>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1.5" [rowspan]="3">
+            <mat-list role="list">
+                @for (c of expensesCategories; track c) {
+                <mat-list-item role="listitem"><span>{{c.value}}</span></mat-list-item>
+                }
+                <mat-list-item>
+                    <span font-size="10px">TotalExpenses</span>
+                </mat-list-item>
+            </mat-list>
+        </mat-grid-tile>
+        @for (p of currentPeriod; track p) {
+        <mat-grid-tile [colspan]="1" [rowspan]="3">
+            <mat-list role="list">
+                @for (c of expensesCategories; track c) {
+                <mat-list-item role="listitem" class="amount-value">{{
+                    getIncomesByCategory(false,c.value,p.year,p.month,'Predicted')}}</mat-list-item>
+                }
+                <mat-list-item class="amount-value">{{calcuateTotal(false,p.year,p.month,'Predicted')}}</mat-list-item>
+            </mat-list>
+        </mat-grid-tile>
+
+        <mat-grid-tile [colspan]="1" [rowspan]="3">
+            <mat-list role="list">
+                @for (c of expensesCategories; track c) {
+                <mat-list-item role="listitem" class="amount-value">{{
+                    getIncomesByCategory(false,c.value,p.year,p.month,'Real')}}</mat-list-item>
+                }
+                <mat-list-item class="amount-value">{{calcuateTotal(false,p.year,p.month,'Real')}}</mat-list-item>
+            </mat-list>
+        </mat-grid-tile>
+        }
+        <mat-grid-tile [colspan]="1.5" [rowspan]="3">
+            <mat-list role="list">
+
+                @for (c of incomeCateogories; track c) {
+                <mat-list-item role="listitem">{{ c.value }}</mat-list-item>
+                }
+                <mat-list-item role="listitem">Total Incomes</mat-list-item>
+                <mat-list-item role="listitem">Balance</mat-list-item>
+            </mat-list>
+        </mat-grid-tile>
+
+        @for (p of currentPeriod; track p) {
+        <mat-grid-tile [colspan]="1" [rowspan]="3">
+            <mat-list role="list">
+                @for (c of incomeCateogories; track c) {
+                <mat-list-item role="listitem" class="amount-value">{{
+                    getIncomesByCategory(true,c.value,p.year,p.month,'Predicted')}}</mat-list-item>
+                }
+                <mat-list-item class="amount-value">{{calcuateTotal(true,p.year,p.month,'Predicted')}}</mat-list-item>
+                <mat-list-item class="amount-value">{{calculateBalance(p.year,p.month,'Predicted')}}</mat-list-item>
+            </mat-list>
+        </mat-grid-tile>
+
+        <mat-grid-tile [colspan]="1" [rowspan]="3">
+            <mat-list role="list">
+                @for (c of incomeCateogories; track c) {
+                <mat-list-item role="listitem" class="amount-value">{{
+                    getIncomesByCategory(true,c.value,p.year,p.month,'Real')}}</mat-list-item>
+                }
+                <mat-list-item class="amount-value">{{calcuateTotal(true,p.year,p.month,'Real')}}</mat-list-item>
+                <mat-list-item class="amount-value">{{calculateBalance(p.year,p.month,'Real')}}</mat-list-item>
+            </mat-list>
+        </mat-grid-tile>
+        }
+
+    </mat-grid-list>
+</div>

@@ -1,0 +1,10 @@
+<mat-form-field class="example-full-width">
+    <mat-label>Month</mat-label>
+    <input type="text" placeholder="Pick one" aria-label="Number" matInput [formControl]="formControl"
+        [matAutocomplete]="auto">
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+        @for (option of filteredOptions | async; track option) {
+        <mat-option [value]="option.title">{{ option.title }}</mat-option>
+        }
+    </mat-autocomplete>
+</mat-form-field>

@@ -1,0 +1,98 @@
+<mat-tab-group>
+    <mat-tab>
+        <ng-template mat-tab-label>{{ExisintgLabel}}</ng-template>
+        <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+            <ng-container matColumnDef="id">
+                <mat-header-cell mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
+                <mat-cell mat-cell *matCellDef="let element"> {{ element.id }} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="year">
+                <mat-header-cell mat-header-cell *matHeaderCellDef> Year </mat-header-cell>
+                <mat-cell mat-cell *matCellDef="let element">
+                    @if (element?.edit) {
+
+                    <app-year [formControl]="yearFormContorl"></app-year>
+
+                    } @else { {{ element.year }} } </mat-cell>
+            </ng-container>
+
+
+            <ng-container matColumnDef="month">
+                <mat-header-cell mat-header-cell *matHeaderCellDef> Month </mat-header-cell>
+                <mat-cell mat-cell *matCellDef="let element">
+                    @if (element?.edit) {
+                    <app-month-autocomplite [formControl]="monthFormContorl"></app-month-autocomplite>
+                    }
+                    @else {
+                    {{ getMonthTitle(element.month) }}
+                    }
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="category">
+                <mat-header-cell mat-header-cell *matHeaderCellDef> Category </mat-header-cell>
+                <mat-cell mat-cell *matCellDef="let element"> {{ element.category.value }} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="amount">
+                <mat-header-cell mat-header-cell *matHeaderCellDef> Amount </mat-header-cell>
+                <mat-cell mat-cell *matCellDef="let element">
+                    @if (element?.edit) {
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Amount </mat-label>
+                        <input matInput type="number" [formControl]="amountFormContorl">
+                    </mat-form-field>
+                    }
+                    @else {
+                    {{ element.amount | number: '1.2-2'}}
+                    } </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="kind">
+                <mat-header-cell mat-header-cell *matHeaderCellDef> Kind </mat-header-cell>
+                <mat-cell mat-cell *matCellDef="let element"> {{ element.kind }} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="edit">
+                <mat-header-cell mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                <mat-cell mat-cell *matCellDef="let element">
+                    @if (element?.edit) {
+                    <button mat-flat-button (click)="saveChanges(element.id)">Save</button>
+                    }
+                    @else {
+                    <button mat-flat-button [disabled]="editIsDisabled" (click)="setToEdit(element.id,true)">Edit</button>
+                    }
+                </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="delete">
+                <mat-header-cell mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                <mat-cell mat-cell *matCellDef="let element">
+                    @if (element?.edit){
+                    <button mat-flat-button (click)="setToEdit(element.id,false)">Cancel</button>
+                    }
+                    @else {
+                    <button (click)="deleteElement(element.id)" mat-mini-fab>
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                    }
+
+                </mat-cell>
+            </ng-container>
+
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row matRipple *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+
+    </mat-tab>
+    <mat-tab>
+        <ng-template mat-tab-label>{{NewLabel}}</ng-template>
+        <div>
+            <app-expense-income-form [kind]="isIncome ? 'Income' : 'Expenses'"
+                (onSubmitBody)="submit($event)"></app-expense-income-form>
+        </div>
+
+    </mat-tab>
+
+</mat-tab-group>
